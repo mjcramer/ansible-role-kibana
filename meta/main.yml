@@ -1,0 +1,8 @@
+# roles/mesos-slave/meta/main.yml
+---
+dependencies:
+  - role: system
+  - role: mesos-common
+  - role: docker
+    when: "'docker' in mesos_slave_config_containerizers"
+  # - role: hdfs-common

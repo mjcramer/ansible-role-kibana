@@ -1,0 +1,88 @@
+# roles/mesos-slave/tasks/configure.yml
+---
+#- name: configure | master
+#  template:
+#    src: master.j2
+#    dest: "{{ mesos_slave.conf_dir }}/master"
+#  notify:
+#    - restart mesos slave
+
+- name: configure | ip
+  copy:
+    content: "{{ mesos_slave_config_ip }}"
+    dest: "{{ mesos_slave.conf_dir }}/ip"
+  notify:
+    - restart mesos slave
+
+- name: configure | hostname
+  template:
+    src: hostname.j2
+    dest: "{{ mesos_slave.conf_dir }}/hostname"
+  notify:
+    - restart mesos slave
+
+- name: configure | work dir
+  copy:
+    content: "{{ mesos_slave_config_port }}"
+    dest: "{{ mesos_slave.conf_dir }}/port"
+  notify:
+    - restart mesos slave
+
+- name: configure | work dir
+  copy:
+    content: "{{ mesos.lib_dir }}"
+    dest: "{{ mesos_slave.conf_dir }}/work_dir"
+  notify:
+    - restart mesos slave
+
+- name: configure | containerizers
+  copy:
+    content: "{{ mesos_slave_config_containerizers | join(',') }}"
+    dest: "{{ mesos_slave.conf_dir }}/containerizers"
+  notify:
+    - restart mesos slave
+
+- name: configure | resources
+  copy:
+    content: "{{ mesos_slave_config_resources | join(';') }}"
+    dest: "{{ mesos_slave.conf_dir }}/resources"
+  when: mesos_slave_config_resources is defined
+  notify:
+    - restart mesos slave
+    
+- name: configure | attributes
+  copy:
+    content: "{{ mesos_slave_config_attributes | join(';') }}"
+    dest: "{{ mesos_slave.conf_dir }}/attributes"
+  when: mesos_slave_config_attributes is defined
+  notify:
+    - restart mesos slave
+
+- name: configure | executor registration timeout
+  copy:
+    content: "{{ mesos_slave_config_executor_registration_timeout }}"
+    dest: "{{ mesos_slave.conf_dir }}/executor_registration_timeout"
+  notify:
+    - restart mesos slave
+
+# - name: configure | hadoop home
+#   copy:
+#     content: "{{ hadoop.home_dir }}"
+#     dest: "{{ mesos_slave.conf_dir }}/hadoop_home"
+#   notify:
+#     - restart mesos slave
+
+- name: configure | rsyslog
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.d/80-mesos-slave.conf
+  notify:
+    - restart rsyslog
+
+#- name: configure | systemd
+#  template:
+#    src: systemd.conf.j2
+#    dest: "{{ systemd_service_dir }}/mesos-slave.service"
+#    mode: 0644
+#  notify:
+#    - reload systemd

@@ -1,0 +1,7 @@
+# roles/mesos-slave/tasks/check.yml
+---
+# This check doesn't work, something about this port status on 5051: tcp/enbd-cstatd
+# - name: check | mesos slave port
+#   wait_for:
+#     port: "{{ mesos_slave_config_port }}"
+#     delay: 1

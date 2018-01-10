@@ -1,0 +1,5 @@
+# roles/mesos-slave/vars/main.yml
+---
+mesos_slave:
+  conf_dir: /etc/mesos-slave
+  env_file: /etc/default/mesos-slave

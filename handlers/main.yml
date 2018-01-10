@@ -1,0 +1,6 @@
+# roles/mesos-slave/handlers/main.yml
+---
+- name: restart mesos slave
+  service: 
+    name: mesos-slave 
+    state: restarted

@@ -1,0 +1,19 @@
+# roles/mesos-slave/defaults/main.yml
+---
+mesos_slave_config_port: "{{ mesos_slave_port | default(5051) }}"
+mesos_slave_config_ip: 0.0.0.0
+# Order is important here as it specifies priority...
+mesos_slave_config_containerizers:
+  - docker
+  - mesos
+mesos_slave_config_resources:
+  # - "cpus:24"
+  # - "mem:24576"
+  # - "disk:409600"
+  - "ports:[1025-65535]"
+  
+mesos_slave_config_attributes:
+  - role:compute
+
+mesos_slave_config_executor_registration_timeout: 5mins
+  

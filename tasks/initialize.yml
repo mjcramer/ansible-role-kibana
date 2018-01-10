@@ -1,0 +1,7 @@
+# roles/mesos-slave/tasks/initialize.yml
+---
+- name: initialize | start service
+  service:
+    name: mesos-slave
+    enabled: yes
+    state: started

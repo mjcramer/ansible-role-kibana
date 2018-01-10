@@ -1,0 +1,11 @@
+# roles/mesos-slave/tasks/apply.yml
+---
+#- name: apply | create folders
+#  file:
+#    path: "{{ item }}"
+#    state: directory
+#    owner: "{{ mesos_user }}"
+#    group: "{{ mesos_group }}"
+#    mode: 0775
+#  with_items:
+#    - "{{ mesos_slave.conf_dir }}"
